@@ -23,6 +23,17 @@ namespace BurgerKiosk
             rdoHamBurger.KeyDown += RdoMenu_KeyDown;
             rdoBulgogiBurger.KeyDown += RdoMenu_KeyDown;
             rdoChickenBurger.KeyDown += RdoMenu_KeyDown;
+
+            // 3. 체크박스 선택 즉시 업데이트할 이벤트 연결
+            chkPotato.CheckedChanged += Option_CheckedChanged;
+            chkCola.CheckedChanged += Option_CheckedChanged;
+            chkCheese.CheckedChanged += Option_CheckedChanged;
+            chkSauce.CheckedChanged += Option_CheckedChanged;
+        }
+
+        private void Option_CheckedChanged(object? sender, EventArgs e)
+        {
+            UpdateOrderSummary();
         }
 
         protected override void OnShown(EventArgs e)
@@ -32,6 +43,9 @@ namespace BurgerKiosk
             rdoHamBurger.Checked = false;
             rdoBulgogiBurger.Checked = false;
             rdoChickenBurger.Checked = false;
+
+            // 초기 상태를 화면에 반영 (리스트박스 및 금액 초기화)
+            UpdateOrderSummary();
         }
 
         private void RdoMenu_KeyDown(object? sender, KeyEventArgs e)
@@ -42,6 +56,7 @@ namespace BurgerKiosk
                 rdoBulgogiBurger.Checked = false;
                 rdoChickenBurger.Checked = false;
                 rdo.Checked = true;
+                UpdateOrderSummary(); // 즉시 업데이트
             }
         }
 
@@ -56,24 +71,25 @@ namespace BurgerKiosk
             if (sender is RadioButton rdo)
             {
                 rdo.Checked = true;
+                UpdateOrderSummary(); // 즉시 업데이트
             }
         }
 
-        private void btnOrder_Click(object sender, EventArgs e)
+        private void UpdateOrderSummary()
         {
-
-
+            // 메뉴가 하나도 선택되지 않은 상태라면 계산하지 않고 초기 상태로 둡니다.
             if (!rdoHamBurger.Checked && !rdoBulgogiBurger.Checked && !rdoChickenBurger.Checked)
             {
                 lstOrder.Items.Clear();
-                lblTotalCost.ForeColor = Color.Red;
-                lblTotalCost.Text = "메뉴를 선택하세요.";
+                lblTotalCost.Text = "총 금액: 0원";
+                lblTotalCost.ForeColor = Color.DarkBlue;
                 return;
             }
 
             int totalCost = 0;
 
             lstOrder.Items.Clear();
+            lblTotalCost.ForeColor = Color.DarkBlue;
 
             if (rdoHamBurger.Checked)
             {
@@ -116,6 +132,20 @@ namespace BurgerKiosk
             }
 
             lblTotalCost.Text = $"총 금액: {totalCost:N0}원";
+        }
+
+        private void btnOrder_Click(object sender, EventArgs e)
+        {
+            if (!rdoHamBurger.Checked && !rdoBulgogiBurger.Checked && !rdoChickenBurger.Checked)
+            {
+                lstOrder.Items.Clear();
+                lblTotalCost.ForeColor = Color.Red;
+                lblTotalCost.Text = "메뉴를 선택하세요.";
+                return;
+            }
+
+            // 필요하다면 여기에 주문 완료 메시지 등 추가 가능
+            MessageBox.Show("주문이 완료되었습니다.", "주문 확인", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnInit_Click(object sender, EventArgs e)
