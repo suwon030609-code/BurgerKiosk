@@ -44,6 +44,7 @@
             chkSauce = new CheckBox();
             chkCheese = new CheckBox();
             chkCola = new CheckBox();
+            lblStatus = new Label();
             grpOrder = new GroupBox();
             lstOrder = new ListBox();
             lblTotalCost = new Label();
@@ -238,6 +239,18 @@
             chkCola.Text = "콜라";
             chkCola.UseVisualStyleBackColor = true;
             // 
+            // lblStatus
+            // 
+            lblStatus.AutoSize = true;
+            lblStatus.Font = new Font("맑은 고딕", 19.875F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblStatus.ForeColor = Color.Red;
+            lblStatus.Location = new Point(1015, 849);
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(182, 71);
+            lblStatus.TabIndex = 9;
+            lblStatus.Text = "label1";
+            lblStatus.Visible = false;
+            // 
             // grpOrder
             // 
             grpOrder.Controls.Add(lstOrder);
@@ -276,6 +289,7 @@
             AutoScaleDimensions = new SizeF(14F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1574, 929);
+            Controls.Add(lblStatus);
             Controls.Add(grpOrder);
             Controls.Add(grpOption);
             Controls.Add(btnInit);
@@ -319,5 +333,6 @@
         private GroupBox grpOrder;
         private ListBox lstOrder;
         private Label lblTotalCost;
+        private Label lblStatus;
     }
 }

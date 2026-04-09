@@ -9,6 +9,19 @@ namespace BurgerKiosk
 
         private void btnOrder_Click(object sender, EventArgs e)
         {
+            lblStatus.Visible = false;
+            lblStatus.Text = "";
+
+            if (!rdoHamBurger.Checked && !rdoBulgogiBurger.Checked && !rdoChickenBurger.Checked)
+            {
+                lstOrder.Items.Clear();
+                lblTotalCost.Text = "총 금액: 0원";
+
+                lblStatus.Text = "메뉴를 선택하세요.";
+                lblStatus.Visible = true;
+                return;
+            }
+
             int totalCost = 0;
 
             lstOrder.Items.Clear();
@@ -69,6 +82,9 @@ namespace BurgerKiosk
 
             lstOrder.Items.Clear();
             lblTotalCost.Text = "총 금액: 0원";
+
+            lblStatus.Text = "";
+            lblStatus.Visible = false;
         }
     }
 }
